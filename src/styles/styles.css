@@ -1,0 +1,36 @@
+.swiper {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.swiper-slide-content {
+  position: absolute;
+  margin-top: 150px;
+  width: 100%;
+  text-align: center;
+}
+
+.swiper-button-next {
+  color: #FFBA08 !important;
+}
+
+.swiper-button-prev {
+  color: #FFBA08 !important;
+}
+
+.swiper-pagination-bullet {
+  background-color: #FFBA08 !important;
+}
+
+.content-image {
+  width: 1240px !important;
+  height: 400px !important;
+}
+
+.content-image img {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}

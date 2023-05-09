@@ -1,29 +1,19 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { Box, Text } from "@chakra-ui/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper";
+import { ContinentsDataResponse } from "@/interfaces/faunadbResponse";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import Image from "next/image";
 
-const SlideContinents: React.FC = () => {
-  const slides = [
-    {
-      id: 1,
-      image: "/images/europe/continent-europe.png",
-      continent: "Europa",
-      description: "O continente mais antigo",
-    },
-    {
-      id: 2,
-      image: "/images/europe/continent-europe.png",
-      continent: "América do Norte",
-      description: "O continente mais antigo",
-    },
-  ];
+interface Props {
+  data: ContinentsDataResponse[];
+}
 
+const SlideContinents: React.FC<Props> = ({ data }) => {
   return (
     <Box width="container.lg" mt="12">
       <Swiper
@@ -33,7 +23,7 @@ const SlideContinents: React.FC = () => {
         mousewheel={true}
         modules={[Navigation, Pagination, Mousewheel, Keyboard]}
       >
-        {slides.map((item, index) => (
+        {data.map((item: ContinentsDataResponse, index) => (
           <SwiperSlide key={index}>
             <div className="swiper-slide-content">
               <Text fontSize="48px" color="gray.100" fontWeight="bold">
@@ -43,7 +33,9 @@ const SlideContinents: React.FC = () => {
                 {item.description}
               </Text>
             </div>
-            <Image src={item.image} alt="asdd" width={1240} height={450} />
+            <div className="content-image">
+              <img src={item.imageUrl} alt={item.description} />
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>

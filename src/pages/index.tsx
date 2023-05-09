@@ -2,12 +2,28 @@ import React from "react";
 import Header from "@/components/Header";
 import CardTravelOptions from "@/components/CardTravelOptions";
 import { Box, Divider, Flex, Image, Text } from "@chakra-ui/react";
+import SlideContinents from "@/components/SlideContinents";
+import client from "./../services/faunadb";
+import faunadb from "faunadb";
+import { getData } from "./lib";
+import { ContinentsDataResponse } from "@/interfaces/faunadbResponse";
+const q = faunadb.query;
 
-export default function Home() {
+interface Props {
+  data: ContinentsDataResponse[];
+}
+
+export default function Home({ data }: Props) {
   return (
     <React.Fragment>
       <Header />
-      <Flex width="100%" flexDir="column" justify="center" align="center">
+      <Flex
+        width="100%"
+        flexDir="column"
+        justify="center"
+        align="center"
+        marginBottom="10"
+      >
         <Box position="relative">
           <Image
             alt="Banner"
@@ -49,7 +65,24 @@ export default function Home() {
         <Text mt="52px" textAlign="center" color="gray.800" fontSize="24px">
           Vamos nessa? <br /> Então escolha seu continente
         </Text>
+
+        <SlideContinents data={data} />
       </Flex>
     </React.Fragment>
   );
+}
+
+export async function getStaticProps() {
+  const response = await getData();
+
+  const data = response?.data?.map((item: any) => {
+    const { ref, ...rest } = item.data;
+    return rest;
+  });
+
+  return {
+    props: {
+      data,
+    },
+  };
 }
