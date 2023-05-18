@@ -1,13 +1,37 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Spacer } from "@chakra-ui/react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React from "react";
 
-const Header = () => {
+interface Props {
+  isVisibleGoBack: boolean;
+}
+
+const Header = ({ isVisibleGoBack }: Props) => {
+  const { back } = useRouter();
+
   return (
-    <Flex justifyContent="center" width="100%" height={100}>
-      <Box display="flex" justifyContent="center" alignItems="center">
+    <Flex alignItems="center" height={100}>
+      {isVisibleGoBack && (
+        <Box
+          onClick={() => back()}
+          marginLeft={12}
+          style={{ cursor: "pointer" }}
+        >
+          <Image src="/goBack.svg" alt="Go Back" width={32} height={32} />
+        </Box>
+      )}
+      <Spacer />
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height={100}
+      >
         <Image alt="Logo" src="/images/logo.svg" width={184} height={45} />
       </Box>
+      <Spacer />
+      <Box />
     </Flex>
   );
 };

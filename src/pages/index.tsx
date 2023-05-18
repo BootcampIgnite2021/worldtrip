@@ -7,7 +7,6 @@ import client from "./../services/faunadb";
 import faunadb from "faunadb";
 import { getData } from "./lib";
 import { ContinentsDataResponse } from "@/interfaces/faunadbResponse";
-const q = faunadb.query;
 
 interface Props {
   data: ContinentsDataResponse[];
@@ -16,7 +15,7 @@ interface Props {
 export default function Home({ data }: Props) {
   return (
     <React.Fragment>
-      <Header />
+      <Header isVisibleGoBack={false} />
       <Flex
         width="100%"
         flexDir="column"
