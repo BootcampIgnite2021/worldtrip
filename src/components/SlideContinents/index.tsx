@@ -52,8 +52,18 @@ const SlideContinents: React.FC<Props> = ({ data }) => {
     router.push(`/continent/${urlRedirect?.redirectUrl}`);
   };
 
+  const [isSmallScreen, setIsSmallScreen] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth >= 1024);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
-    <Box width="container.lg" mt="12">
+    <Box width={isSmallScreen ? "800px" : "100%"} mt="12">
       <Swiper
         cssMode={true}
         navigation={true}
@@ -69,10 +79,18 @@ const SlideContinents: React.FC<Props> = ({ data }) => {
             }}
           >
             <div className="swiper-slide-content">
-              <Text fontSize="48px" color="gray.100" fontWeight="bold">
+              <Text
+                fontSize={{ base: "24px", md: "48px" }}
+                color="gray.100"
+                fontWeight="bold"
+              >
                 {item.continent}
               </Text>
-              <Text fontSize="24px" color="gray.100" fontWeight="bold">
+              <Text
+                fontSize={{ base: "14px", md: "24px" }}
+                color="gray.100"
+                fontWeight="bold"
+              >
                 {item.description}
               </Text>
             </div>
