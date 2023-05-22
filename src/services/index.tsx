@@ -1,4 +1,4 @@
-import client from "./../../services/faunadb";
+import client from "./faunadb";
 import faunadb from "faunadb";
 import {
   ContinentsDataResponse,

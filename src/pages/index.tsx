@@ -5,7 +5,7 @@ import { Box, Divider, Flex, Image, Text } from "@chakra-ui/react";
 import SlideContinents from "@/components/SlideContinents";
 import client from "./../services/faunadb";
 import faunadb from "faunadb";
-import { getData } from "./lib";
+import { getData } from "@/services";
 import { ContinentsDataResponse } from "@/interfaces/faunadbResponse";
 
 interface Props {
