@@ -56,14 +56,14 @@ const SlideContinents: React.FC<Props> = ({ data }) => {
 
   React.useEffect(() => {
     const handleResize = () => {
-      setIsSmallScreen(window.innerWidth >= 1024);
+      setIsSmallScreen(window.innerWidth <= 1024);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
-    <Box width={isSmallScreen ? "800px" : "100%"} mt="12">
+    <Box width={!isSmallScreen ? "800px" : "100%"} mt="12">
       <Swiper
         cssMode={true}
         navigation={true}

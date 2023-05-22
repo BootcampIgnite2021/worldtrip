@@ -48,7 +48,7 @@ const CardTravelOptions: React.FC = () => {
 
   React.useEffect(() => {
     const handleResize = () => {
-      setIsSmallScreen(window.innerWidth >= 768);
+      setIsSmallScreen(window.innerWidth <= 768);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -60,10 +60,10 @@ const CardTravelOptions: React.FC = () => {
       maxW="container.lg"
       justifyContent="center"
       align="center"
-      marginTop={isSmallScreen ? "80px" : "40px"}
+      marginTop={!isSmallScreen ? "80px" : "40px"}
     >
-      <Wrap spacing={isSmallScreen ? "130px" : "40px"} justify="center">
-        {isSmallScreen
+      <Wrap spacing={!isSmallScreen ? "130px" : "40px"} justify="center">
+        {!isSmallScreen
           ? dataOptions.map((item: DataOptionsProps, index: number) => (
               <WrapItem key={index} justifyContent="center" alignItems="center">
                 <Box
