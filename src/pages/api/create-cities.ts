@@ -11,15 +11,15 @@ let urlOceania = "https://worldtrip-ignite.netlify.app/images/oceania";
 let urlSouthAmerica =
   "https://worldtrip-ignite.netlify.app/images/south-america";
 
-const createCityCollection = async () => {
+export async function createCityCollection() {
   await client.query(
     q.CreateCollection({
       name: "cities",
     })
   );
-};
+}
 
-const createCityDocuments = async () => {
+export async function createCityDocuments() {
   const cities = [
     // América do Norte
     {
@@ -188,6 +188,6 @@ const createCityDocuments = async () => {
       )
     )
   );
-};
+}
 
 // createCityCollection().then(createCityDocuments);

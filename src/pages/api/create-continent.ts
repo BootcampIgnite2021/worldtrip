@@ -11,15 +11,15 @@ let urlOceania = "https://worldtrip-ignite.netlify.app/images/oceania";
 let urlSouthAmerica =
   "https://worldtrip-ignite.netlify.app/images/south-america";
 
-const createContinentCollection = async () => {
+export async function createContinentCollection() {
   await client.query(
     q.CreateCollection({
       name: "continents",
     })
   );
-};
+}
 
-export const createContinentDocuments = async () => {
+export async function createContinentDocuments() {
   const continents = [
     {
       imageUrl: `${urlNorthAmerica}/north-america.png`,
@@ -62,6 +62,6 @@ export const createContinentDocuments = async () => {
       )
     )
   );
-};
+}
 
 // createContinentCollection().then(createContinentDocuments);
