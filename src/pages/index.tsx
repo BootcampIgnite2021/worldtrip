@@ -13,16 +13,6 @@ interface Props {
 }
 
 export default function Home({ data }: Props) {
-  const [isSmallScreen, setIsSmallScreen] = React.useState(false);
-
-  React.useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth <= 768);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   return (
     <React.Fragment>
       <Header isVisibleGoBack={false} />
@@ -38,12 +28,12 @@ export default function Home({ data }: Props) {
             alt="Banner"
             src="/images/background.png"
             width={2000}
-            height={!isSmallScreen ? 335 : 163}
+            height={{ base: "163", lg: "335" }}
           />
 
           <Box
-            left={!isSmallScreen ? "100" : "2"}
-            top={!isSmallScreen ? "20" : "6"}
+            left={{ base: "2", lg: "100" }}
+            top={{ base: "6", lg: "20" }}
             position="absolute"
           >
             <Text
@@ -64,7 +54,7 @@ export default function Home({ data }: Props) {
             </Text>
           </Box>
           <Image
-            visibility={!isSmallScreen ? "visible" : "hidden"}
+            visibility={{ base: "hidden", lg: "visible" }}
             alt="Banner"
             src="/images/airplane.png"
             position="absolute"
