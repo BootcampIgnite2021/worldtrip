@@ -9,43 +9,17 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { useRouter } from "next/router";
+import { dataContinentsUrl } from "@/interfaces/continents-url";
 
 interface Props {
   data: ContinentsDataResponse[];
 }
 
 const SlideContinents: React.FC<Props> = ({ data }) => {
-  const dataContinent = [
-    {
-      continent: "América do Norte",
-      redirectUrl: "north-america",
-    },
-    {
-      continent: "América do Sul",
-      redirectUrl: "south-america",
-    },
-    {
-      continent: "Ásia",
-      redirectUrl: "asia",
-    },
-    {
-      continent: "Europa",
-      redirectUrl: "europe",
-    },
-    {
-      continent: "Oceania",
-      redirectUrl: "oceania",
-    },
-    {
-      continent: "África",
-      redirectUrl: "africa",
-    },
-  ];
-
   const router = useRouter();
 
   const handleRedirectPage = (continent: string) => {
-    const urlRedirect = dataContinent.find(
+    const urlRedirect = dataContinentsUrl.find(
       (item) => item.continent === continent
     );
 

@@ -34,3 +34,10 @@
   height: 100% !important;
   object-fit: cover !important;
 }
+
+.image-country {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 50% !important;
+}
