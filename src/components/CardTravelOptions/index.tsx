@@ -1,10 +1,10 @@
 import React from "react";
 import {
   Box,
-  Center,
   Flex,
   Image,
   Text,
+  useBreakpointValue,
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";
@@ -44,15 +44,12 @@ const dataOptions: DataOptionsProps[] = [
 ];
 
 const CardTravelOptions: React.FC = () => {
-  const [isSmallScreen, setIsSmallScreen] = React.useState(false);
+  const [showBlock, setShowBlock] = React.useState(false);
+  const isMobile = useBreakpointValue({ base: true, lg: false });
 
   React.useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth <= 768);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    setShowBlock(!isMobile);
+  }, [isMobile]);
 
   return (
     <Flex
@@ -60,12 +57,17 @@ const CardTravelOptions: React.FC = () => {
       maxW="container.lg"
       justifyContent="center"
       align="center"
-      marginTop={!isSmallScreen ? "80px" : "40px"}
+      marginTop={{ base: "40px", lg: "80px" }}
     >
-      <Wrap spacing={!isSmallScreen ? "130px" : "40px"} justify="center">
-        {!isSmallScreen
+      <Wrap spacing={{ base: "40px", lg: "130px" }} justify="center">
+        {showBlock
           ? dataOptions.map((item: DataOptionsProps, index: number) => (
-              <WrapItem key={index} justifyContent="center" alignItems="center">
+              <WrapItem
+                key={index}
+                visibility={{ base: "hidden", lg: "visible" }}
+                justifyContent="center"
+                alignItems="center"
+              >
                 <Box
                   display="flex"
                   flexDir="column"
