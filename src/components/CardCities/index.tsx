@@ -26,7 +26,7 @@ const CardCities = ({ dataCities }: CardCities) => {
     >
       {dataCities.map((item, index) => (
         <WrapItem key={index}>
-          <Card maxW="xs" borderWidth="1px" borderColor="yellow.900">
+          <Card w="xs" borderWidth="1px" borderColor="yellow.900">
             <Image
               objectFit="cover"
               width="100%"

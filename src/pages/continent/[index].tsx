@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import Header from "@/components/Header";
 import { useRouter } from "next/router";
-import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Image, Text, Tooltip } from "@chakra-ui/react";
 import { dataContinentsUrl } from "@/interfaces/continents-url";
 import CardCities from "@/components/CardCities";
 import { getDataCities, getDataContinentsDescriptionCities } from "@/services";
@@ -44,7 +44,7 @@ export default function Continents({
 
       <Box position="relative">
         <Image
-          src="https://worldtrip-ignite.netlify.app/images/europe/continent-europe.png"
+          src={continent.imageUrl}
           alt="Europa"
           width="100%"
           height={{ base: "150px", lg: "250px" }}
@@ -57,7 +57,7 @@ export default function Continents({
           position="absolute"
         >
           <Text
-            fontSize={{ base: "28px", lg: "48px" }}
+            fontSize={{ base: "18px", lg: "48px" }}
             fontWeight="semibold"
             color="white"
           >
@@ -129,14 +129,25 @@ export default function Continents({
                 >
                   {continent.cidades}
                 </Text>
-                <Text
-                  width={{ base: "110px", lg: "100%" }}
-                  color="gray.800"
-                  fontSize={{ base: "18px", lg: "24px" }}
-                  fontWeight={{ base: "regular", lg: "semibold" }}
-                >
-                  cidades +100
-                </Text>
+                <Flex alignItems="center">
+                  <Text
+                    width={{ base: "110px", lg: "100%" }}
+                    color="gray.800"
+                    fontSize={{ base: "18px", lg: "24px" }}
+                    fontWeight={{ base: "regular", lg: "semibold" }}
+                  >
+                    cidades +100
+                  </Text>
+                  <Tooltip label="Muitas cidades" aria-label="A tooltip">
+                    <Image
+                      src="/info.svg"
+                      alt="Info"
+                      width="16px"
+                      height="16px"
+                      marginLeft="8px"
+                    />
+                  </Tooltip>
+                </Flex>
               </Box>
             </Flex>
           </Box>

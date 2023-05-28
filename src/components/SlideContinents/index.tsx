@@ -26,18 +26,8 @@ const SlideContinents: React.FC<Props> = ({ data }) => {
     router.push(`/continent/${urlRedirect?.redirectUrl}`);
   };
 
-  const [isSmallScreen, setIsSmallScreen] = React.useState(false);
-
-  React.useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth <= 1024);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   return (
-    <Box width={!isSmallScreen ? "800px" : "100%"} mt="12">
+    <Box width={{ base: "100%", lg: "900px" }} mt="12">
       <Swiper
         cssMode={true}
         navigation={true}
