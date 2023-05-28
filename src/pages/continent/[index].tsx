@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect } from "react";
 import Header from "@/components/Header";
@@ -5,8 +6,21 @@ import { useRouter } from "next/router";
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import { dataContinentsUrl } from "@/interfaces/continents-url";
 import CardCities from "@/components/CardCities";
+import { getDataCities, getDataContinentsDescriptionCities } from "@/services";
+import {
+  ContinentsAndCitiesDataResponse,
+  ContinentsDataResponse,
+} from "@/interfaces/faunadbResponse";
 
-export default function Continents() {
+interface ContinentsData {
+  dataCities: ContinentsAndCitiesDataResponse[];
+  dataContinent: ContinentsDataResponse[];
+}
+
+export default function Continents({
+  dataCities,
+  dataContinent,
+}: ContinentsData) {
   const router = useRouter();
 
   useEffect(() => {
@@ -21,6 +35,8 @@ export default function Continents() {
       return;
     }
   }, [router]);
+
+  const [continent] = dataContinent;
 
   return (
     <React.Fragment>
@@ -45,7 +61,7 @@ export default function Continents() {
             fontWeight="semibold"
             color="white"
           >
-            Europa
+            {continent.continent}
           </Text>
         </Box>
       </Box>
@@ -64,11 +80,7 @@ export default function Continents() {
               fontSize={{ base: "14px", lg: "24px" }}
               fontWeight="normal"
             >
-              A Europa é, por convenção, um dos seis continentes do mundo.
-              Compreendendo a península ocidental da Eurásia, a Europa
-              geralmente divide-se da Ásia a leste pela divisória de águas dos
-              montes Urais, o rio Ural, o mar Cáspio, o Cáucaso, e o mar Negro a
-              sudeste
+              {continent.descriptionFull}
             </Text>
           </Box>
 
@@ -83,7 +95,7 @@ export default function Continents() {
                   fontSize={{ base: "24px", lg: "48px" }}
                   fontWeight="semibold"
                 >
-                  50
+                  {continent.country}
                 </Text>
                 <Text
                   color="gray.800"
@@ -99,7 +111,7 @@ export default function Continents() {
                   fontSize={{ base: "24px", lg: "48px" }}
                   fontWeight="semibold"
                 >
-                  50
+                  {continent.language}
                 </Text>
                 <Text
                   color="gray.800"
@@ -115,7 +127,7 @@ export default function Continents() {
                   fontSize={{ base: "24px", lg: "48px" }}
                   fontWeight="semibold"
                 >
-                  50
+                  {continent.cidades}
                 </Text>
                 <Text
                   width={{ base: "110px", lg: "100%" }}
@@ -146,8 +158,61 @@ export default function Continents() {
           </Text>
         </Box>
 
-        <CardCities />
+        <CardCities dataCities={dataCities} />
       </Flex>
     </React.Fragment>
   );
+}
+
+export async function getStaticPaths() {
+  const continents = [
+    "north-america",
+    "south-america",
+    "asia",
+    "europe",
+    "oceania",
+    "africa",
+  ];
+
+  const paths = continents.map((continent) => ({
+    params: { index: continent },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+}
+
+export async function getStaticProps({ params }: any) {
+  const continent = params.index;
+
+  const continentTranslate = dataContinentsUrl.find(
+    ({ redirectUrl }) => redirectUrl === continent
+  );
+
+  const responseCities = await getDataCities(
+    String(continentTranslate?.continent)
+  );
+
+  const responseContinent = await getDataContinentsDescriptionCities(
+    String(continentTranslate?.continent)
+  );
+
+  const dataCities = responseCities?.data?.map((item: any) => {
+    const { ref, ...rest } = item.data;
+    return rest;
+  });
+
+  const dataContinent = responseContinent?.data?.map((item: any) => {
+    const { ref, ...rest } = item.data;
+    return rest;
+  });
+
+  return {
+    props: {
+      dataCities,
+      dataContinent,
+    },
+  };
 }

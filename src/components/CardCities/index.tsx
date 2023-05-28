@@ -1,10 +1,9 @@
 import React from "react";
+import { ContinentsAndCitiesDataResponse } from "@/interfaces/faunadbResponse";
 import {
   Image,
   Card,
-  CardHeader,
   CardBody,
-  CardFooter,
   Text,
   Flex,
   Box,
@@ -14,21 +13,25 @@ import {
 
 import Flag from "react-world-flags";
 
-const CardCities = () => {
+interface CardCities {
+  dataCities: ContinentsAndCitiesDataResponse[];
+}
+
+const CardCities = ({ dataCities }: CardCities) => {
   return (
     <Wrap
       spacing="10"
       align="center"
       justify={{ base: "center", lg: "flex-start" }}
     >
-      {[1, 2, 3, 4, 5].map((item, index) => (
+      {dataCities.map((item, index) => (
         <WrapItem key={index}>
           <Card maxW="xs" borderWidth="1px" borderColor="yellow.900">
             <Image
               objectFit="cover"
               width="100%"
               height="173px"
-              src="https://worldtrip-ignite.netlify.app/images/europe/paris.png"
+              src={item.imageUrl}
               alt="Caffe Latte"
             />
 
@@ -36,7 +39,7 @@ const CardCities = () => {
               <Flex align="center" justify="space-between">
                 <Box>
                   <Text fontSize="20px" fontWeight="semibold">
-                    Londres
+                    {item.name}
                   </Text>
                   <Text
                     color="gray.700"
@@ -44,10 +47,10 @@ const CardCities = () => {
                     fontSize="16px"
                     fontWeight="me"
                   >
-                    Reino Unido
+                    {item.country}
                   </Text>
                 </Box>
-                <Flag className="image-country" code="br" />
+                <Flag className="image-country" code={item.code} />
               </Flex>
             </CardBody>
           </Card>
