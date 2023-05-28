@@ -11,6 +11,7 @@ import {
   ContinentsAndCitiesDataResponse,
   ContinentsDataResponse,
 } from "@/interfaces/faunadbResponse";
+import { GetStaticPaths, GetStaticProps } from "next";
 
 interface ContinentsData {
   dataCities: ContinentsAndCitiesDataResponse[];
@@ -175,7 +176,7 @@ export default function Continents({
   );
 }
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const continents = [
     "north-america",
     "south-america",
@@ -193,13 +194,13 @@ export async function getStaticPaths() {
     paths,
     fallback: false,
   };
-}
+};
 
-export async function getStaticProps({ params }: any) {
-  const continent = params.index;
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const { index }: any = params;
 
   const continentTranslate = dataContinentsUrl.find(
-    ({ redirectUrl }) => redirectUrl === continent
+    ({ redirectUrl }) => redirectUrl === index
   );
 
   const responseCities = await getDataCities(
@@ -226,4 +227,4 @@ export async function getStaticProps({ params }: any) {
       dataContinent,
     },
   };
-}
+};

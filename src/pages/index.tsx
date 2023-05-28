@@ -7,6 +7,7 @@ import client from "./../services/faunadb";
 import faunadb from "faunadb";
 import { getData } from "@/services";
 import { ContinentsDataResponse } from "@/interfaces/faunadbResponse";
+import { GetStaticProps } from "next";
 
 interface Props {
   data: ContinentsDataResponse[];
@@ -84,15 +85,17 @@ export default function Home({ data }: Props) {
   );
 }
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   const response = await getData();
+
   const data = response?.data?.map((item: any) => {
     const { ref, ...rest } = item.data;
     return rest;
   });
+
   return {
     props: {
       data,
     },
   };
-}
+};
